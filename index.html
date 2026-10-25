@@ -15,6 +15,24 @@
       --border: #1e2e22;
     }
 
+    html, body {
+      width: 100vw;
+      min-height: 100vh;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -22,18 +40,10 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-      min-height: 100vh;
-    }
-
     .container {
       width: 100%;
       max-width: 480px;
+      margin: 0 auto;
     }
 
     .header {
@@ -93,11 +103,23 @@
       border-color: var(--accent);
     }
 
-    .size-value {
-      text-align: right;
+    /* Control de desbordamiento para el slider hasta 100 cm */
+    .range-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 0.85rem;
-      color: var(--accent);
+      width: 100%;
       margin-top: 4px;
+    }
+
+    .range-header span {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .size-value {
+      color: var(--accent);
       font-weight: bold;
     }
 
@@ -116,6 +138,7 @@
       transition: transform 0.2s, background-color 0.2s;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      margin-top: 6px;
     }
 
     .btn-cotizacion:hover {
@@ -241,8 +264,10 @@
 
       <div class="form-group">
         <label for="size">Tamaño Aproximado (cm)</label>
-        <input type="range" id="size" min="5" max="100" value="10" oninput="actualizarTamano(); actualizarEnlace();">
-        <div class="size-value"><span id="size-label">10</span> cm</div>
+        <input type="range" id="size" min="0" max="100" value="10" oninput="actualizarTamano(); actualizarEnlace();">
+        <div class="range-header">
+        <span class="size-value"><span id="size-label">10</span> cm</span>
+        </div>
       </div>
 
       <a id="ws-btn" href="#" target="_blank" class="btn-cotizacion">
@@ -295,7 +320,7 @@
       const style = document.getElementById('style').value;
       const zone = document.getElementById('zone').value;
       const size = document.getElementById('size').value;
-      const mensaje = `¡Hola! Me gustaría cotizar un tatuaje con los siguientes detalles:\n- Estilo: ${style}\n- Zona: ${zone}\n- Tamaño aproximado: ${size} cm.\n\nAdjunto mi foto de referencia para coordinar disponibilidad:`;
+      const mensaje = `¡Hola! Me gustaría cotizar un tatuaje con los siguientes detalles:\nEstilo: ${style}\nZona: ${zone}\nTamaño aproximado: ${size} cm.\n\nAdjunto mi foto de referencia para coordinar disponibilidad:`;
       document.getElementById('ws-btn').href = `https://wa.me/584168380344?text=${encodeURIComponent(mensaje)}`;
     }
 
