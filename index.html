@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inmortalyt Ink — Cotizador Express</title>
+  <style>
+    :root {
+      --bg-dark: #0a0a0c;
+      --card-bg: #141419;
+      --accent: #00ffaa; /* Accent neón moderno */
+      --text-main: #f0f0f5;
+      --text-sub: #8a8a9e;
+      --border: #22222e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .header p {
+      font-size: 0.85rem;
+      color: var(--text-sub);
+      margin-top: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-sub);
+    }
+
+    select, input[type="range"] {
+      width: 100%;
+      padding: 12px;
+      background: #1c1c24;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    select:focus {
+      border-color: var(--accent);
+    }
+
+    .size-value {
+      text-align: right;
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-top: 4px;
+      font-weight: bold;
+    }
+
+    .price-box {
+      background: linear-gradient(135deg, #181822 0%, #101018 100%);
+      border: 1px dashed var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      margin-top: 24px;
+    }
+
+    .price-box span {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+
+    .price-box strong {
+      font-size: 2.2rem;
+      color: var(--accent);
+    }
+
+    .btn-ws {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      background: var(--accent);
+      color: #000;
+      text-align: center;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 8px;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    .btn-ws:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h1>Inmortalyt Ink</h1>
+      <p>Cotiza tu próximo proyecto en segundos</p>
+    </div>
+
+    <!-- Zona del cuerpo -->
+    <div class="form-group">
+      <label for="zone">Zona del Cuerpo</label>
+      <select id="zone" onchange="calcular()">
+        <option value="1">Brazo / Antebrazo</option>
+        <option value="1.2">Pierna / Gemelo</option>
+        <option value="1.4">Pecho / Espalda</option>
+        <option value="1.5">Cuello / Manos / Costillas</option>
+      </select>
+    </div>
+
+    <!-- Estilo del tatuaje -->
+    <div class="form-group">
+      <label for="style">Estilo de Diseño</label>
+      <select id="style" onchange="calcular()">
+        <option value="30">Línea Fina / Minimalista</option>
+        <option value="45">Blackwork / Sombras</option>
+        <option value="60">Color / Neotradicional</option>
+        <option value="80">Realismo / Detalle Alto</option>
+      </select>
+    </div>
+
+    <!-- Tamaño en CM -->
+    <div class="form-group">
+      <label for="size">Tamaño Aproximado (cm)</label>
+      <input type="range" id="size" min="5" max="30" value="10" oninput="actualizarTamano(); calcular();">
+      <div class="size-value"><span id="size-label">10</span> cm</div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="price-box">
+      <span>Precio Estimado</span>
+      <strong id="total-price">$0 USD</strong>
+    </div>
+
+    <a id="ws-link" href="#" target="_blank" class="btn-ws">
+      Agendar Cita por WhatsApp
+    </a>
+  </div>
+
+  <script>
+    function actualizarTamano() {
+      const size = document.getElementById('size').value;
+      document.getElementById('size-label').innerText = size;
+    }
+
+    function calcular() {
+      const zoneMultiplier = parseFloat(document.getElementById('zone').value);
+      const styleBasePrice = parseFloat(document.getElementById('style').value);
+      const sizeCm = parseFloat(document.getElementById('size').value);
+
+      // Algoritmo de cálculo estimado
+      let total = (styleBasePrice + (sizeCm * 4)) * zoneMultiplier;
+      total = Math.round(total);
+
+      document.getElementById('total-price').innerText = `$${total} USD`;
+
+      // Enlace dinámico a WhatsApp
+      const mensaje = `Hola! Coticé en la web un tatuaje de aprox ${sizeCm}cm en el estilo seleccionado. Mi estimado dio $${total} USD. Quisiera consultar disponibilidad.`;
+      document.getElementById('ws-link').href = `https://wa.me/584120000000?text=${encodeURIComponent(mensaje)}`;
+    }
+
+    // Inicializar al cargar
+    calcular();
+  </script>
+</body>
+</html>
