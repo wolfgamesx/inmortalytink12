@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inmortalyt Ink — Cotizador Express</title>
+  <title>Inmortalyt Ink — Cotizador y Cuidados</title>
   <style>
     :root {
-      --bg-dark: #0a0a0c;
-      --card-bg: #141419;
-      --accent: #00ffaa; /* Accent neón moderno */
-      --text-main: #f0f0f5;
-      --text-sub: #8a8a9e;
-      --border: #22222e;
+      --bg-dark: #0a0e0a;
+      --card-bg: #121814;
+      --accent: #00e676; /* Verde neón esmeralda */
+      --accent-hover: #00c853;
+      --text-main: #f0f5f1;
+      --text-sub: #8ea393;
+      --border: #1e2e22;
     }
 
     * {
@@ -33,16 +34,11 @@
     .container {
       width: 100%;
       max-width: 480px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
     }
 
     .header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .header h1 {
@@ -55,18 +51,32 @@
     .header p {
       font-size: 0.85rem;
       color: var(--text-sub);
-      margin-top: 6px;
+      margin-top: 4px;
+    }
+
+    /* Formulario de Cotización Superior */
+    .card-form {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     }
 
     .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group:last-of-type {
       margin-bottom: 20px;
     }
 
     label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-transform: uppercase;
       letter-spacing: 0.8px;
       color: var(--text-sub);
@@ -74,13 +84,14 @@
 
     select, input[type="range"] {
       width: 100%;
-      padding: 12px;
-      background: #1c1c24;
+      padding: 10px 12px;
+      background: #080c09;
       border: 1px solid var(--border);
       border-radius: 8px;
       color: var(--text-main);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       outline: none;
+      accent-color: var(--accent);
     }
 
     select:focus {
@@ -89,100 +100,229 @@
 
     .size-value {
       text-align: right;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: var(--accent);
       margin-top: 4px;
       font-weight: bold;
     }
 
-    .price-box {
-      background: linear-gradient(135deg, #181822 0%, #101018 100%);
-      border: 1px dashed var(--accent);
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
-      margin-top: 24px;
-    }
-
-    .price-box span {
-      display: block;
-      font-size: 0.8rem;
-      color: var(--text-sub);
-      text-transform: uppercase;
-    }
-
-    .price-box strong {
-      font-size: 2.2rem;
-      color: var(--accent);
-    }
-
-    .btn-ws {
+    /* Botón de Cotización */
+    .btn-cotizacion {
       display: block;
       width: 100%;
-      margin-top: 20px;
       padding: 14px;
       background: var(--accent);
-      color: #000;
+      color: #041208;
       text-align: center;
       text-decoration: none;
       font-weight: bold;
       font-size: 1rem;
-      border-radius: 8px;
-      transition: transform 0.2s, opacity 0.2s;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(0, 230, 118, 0.35);
+      transition: transform 0.2s, background-color 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    .btn-ws:hover {
-      opacity: 0.9;
+    .btn-cotizacion:hover {
+      background-color: var(--accent-hover);
       transform: translateY(-2px);
+    }
+
+    .cotizacion-hint {
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      margin-top: 8px;
+      line-height: 1.3;
+    }
+
+    /* Secciones */
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-sub);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* Cuadrícula de trabajos recientes (1x1) */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .gallery-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item img:hover {
+      transform: scale(1.03);
+    }
+
+    /* Acordeón de Cuidados Posteriores */
+    .care-section {
+      margin-bottom: 20px;
+    }
+
+    .accordion {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: 14px 16px;
+      background: none;
+      border: none;
+      color: var(--text-main);
+      text-align: left;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      outline: none;
+    }
+
+    .accordion-header span {
+      font-size: 1.1rem;
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      background: #080c09;
+      padding: 0 16px;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+    }
+
+    .accordion.active {
+      border-color: var(--accent);
+    }
+
+    .accordion.active .accordion-content {
+      max-height: 150px;
+      padding: 12px 16px 16px 16px;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+
     <div class="header">
-      <h1>Inmortalyt Ink</h1>
-      <p>Cotiza tu próximo proyecto en segundos</p>
+      <h1>InmortalytInk</h1>
+      <p>Tu piel habla. Nosotros la escribimos.</p>
     </div>
 
-    <!-- Zona del cuerpo -->
-    <div class="form-group">
-      <label for="zone">Zona del Cuerpo</label>
-      <select id="zone" onchange="calcular()">
-        <option value="1">Brazo / Antebrazo</option>
-        <option value="1.2">Pierna / Gemelo</option>
-        <option value="1.4">Pecho / Espalda</option>
-        <option value="1.5">Cuello / Manos / Costillas</option>
-      </select>
+    <!-- Panel de Opciones para la Cotización -->
+    <div class="card-form">
+      <div class="form-group">
+        <label for="style">Estilo de Diseño</label>
+        <select id="style" onchange="actualizarEnlace()">
+          <option value="Línea Fina / Minimalista">Línea Fina / Minimalista</option>
+          <option value="Blackwork / Sombras">Blackwork / Sombras</option>
+          <option value="Color / Neotradicional">Color / Neotradicional</option>
+          <option value="Realismo / Detalle Alto">Realismo / Detalle Alto</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="zone">Zona del Cuerpo</label>
+        <select id="zone" onchange="actualizarEnlace()">
+          <option value="Brazo / Antebrazo">Brazo / Antebrazo</option>
+          <option value="Pierna / Gemelo">Pierna / Gemelo</option>
+          <option value="Pecho / Espalda">Pecho / Espalda</option>
+          <option value="Cuello / Manos / Costillas">Cuello / Manos / Costillas</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="size">Tamaño Aproximado (cm)</label>
+        <input type="range" id="size" min="5" max="100" value="10" oninput="actualizarTamano(); actualizarEnlace();">
+        <div class="size-value"><span id="size-label">10</span> cm</div>
+      </div>
+
+      <!-- Botón de WhatsApp -->
+      <a id="ws-btn" href="#" target="_blank" class="btn-cotizacion">
+        Cotización Aquí
+      </a>
+      <div class="cotizacion-hint">
+        📌 Al hacer clic se abrirá WhatsApp con tus datos. Recuerda adjuntar tu foto de referencia en el chat.
+      </div>
     </div>
 
-    <!-- Estilo del tatuaje -->
-    <div class="form-group">
-      <label for="style">Estilo de Diseño</label>
-      <select id="style" onchange="calcular()">
-        <option value="30">Línea Fina / Minimalista</option>
-        <option value="45">Blackwork / Sombras</option>
-        <option value="60">Color / Neotradicional</option>
-        <option value="80">Realismo / Detalle Alto</option>
-      </select>
+    <!-- Trabajos Recientes (1x1) -->
+    <div class="section-title">Trabajos Recientes</div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="img/trabajo1.jpg" alt="Tatuaje 1">
+      </div>
+      <div class="gallery-item">
+        <img src="img/trabajo2.jpg" alt="Tatuaje 2">
+      </div>
+      <div class="gallery-item">
+        <img src="img/trabajo3.jpg" alt="Tatuaje 3">
+      </div>
+      <div class="gallery-item">
+        <img src="img/trabajo4.jpg" alt="Tatuaje 4">
+      </div>
     </div>
 
-    <!-- Tamaño en CM -->
-    <div class="form-group">
-      <label for="size">Tamaño Aproximado (cm)</label>
-      <input type="range" id="size" min="5" max="30" value="10" oninput="actualizarTamano(); calcular();">
-      <div class="size-value"><span id="size-label">10</span> cm</div>
+    <!-- Cuidados Posteriores -->
+    <div class="care-section">
+      <div class="section-title">Cuidados Posteriores</div>
+
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span>🌸</span> Primeras 24 horas
+        </button>
+        <div class="accordion-content">
+          Mantén el plástico protector de 2 a 4 horas según las indicaciones. Lava suavemente con agua fría y jabón neutro, seca dando toques suaves con papel absorbente.
+        </div>
+      </div>
+
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span>🧴</span> Hidratación y Crema
+        </button>
+        <div class="accordion-content">
+          Aplica una capa muy fina de crema recomendada (como crema hidratante sin perfume o específica para tatuajes) de 2 a 3 veces al día. Mantén la piel hidratada sin excederte.
+        </div>
+      </div>
+
+      <div class="accordion">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          <span>🚫</span> Lo que debes evitar
+        </button>
+        <div class="accordion-content">
+          No arranques las costras ni rasques la zona durante el proceso de pelado. Evita piscinas, playas, exposición directa al sol y ropa muy ajustada que genere fricción.
+        </div>
+      </div>
     </div>
 
-    <!-- Resultado -->
-    <div class="price-box">
-      <span>Precio Estimado</span>
-      <strong id="total-price">$0 USD</strong>
-    </div>
-
-    <a id="ws-link" href="#" target="_blank" class="btn-ws">
-      Agendar Cita por WhatsApp
-    </a>
   </div>
 
   <script>
@@ -191,24 +331,26 @@
       document.getElementById('size-label').innerText = size;
     }
 
-    function calcular() {
-      const zoneMultiplier = parseFloat(document.getElementById('zone').value);
-      const styleBasePrice = parseFloat(document.getElementById('style').value);
-      const sizeCm = parseFloat(document.getElementById('size').value);
+    function actualizarEnlace() {
+      const style = document.getElementById('style').value;
+      const zone = document.getElementById('zone').value;
+      const size = document.getElementById('size').value;
 
-      // Algoritmo de cálculo estimado
-      let total = (styleBasePrice + (sizeCm * 4)) * zoneMultiplier;
-      total = Math.round(total);
-
-      document.getElementById('total-price').innerText = `$${total} USD`;
-
-      // Enlace dinámico a WhatsApp
-      const mensaje = `Hola! Coticé en la web un tatuaje de aprox ${sizeCm}cm en el estilo seleccionado. Mi estimado dio $${total} USD. Quisiera consultar disponibilidad.`;
-      document.getElementById('ws-link').href = `https://wa.me/584120000000?text=${encodeURIComponent(mensaje)}`;
+      const mensaje = `¡Hola! Me gustaría cotizar un tatuaje con los siguientes detalles:\n- Estilo: ${style}\n- Zona: ${zone}\n- Tamaño aproximado: ${size} cm.\n\nAdjunto mi foto de referencia para coordinar disponibilidad:`;
+      document.getElementById('ws-btn').href = `https://wa.me/584120000000?text=${encodeURIComponent(mensaje)}`;
     }
 
-    // Inicializar al cargar
-    calcular();
+    actualizarEnlace();
+
+    function toggleAccordion(button) {
+      const accordion = button.parentElement;
+      document.querySelectorAll('.accordion').forEach(item => {
+        if (item !== accordion) {
+          item.classList.remove('active');
+        }
+      });
+      accordion.classList.toggle('active');
+    }
   </script>
 </body>
 </html>
