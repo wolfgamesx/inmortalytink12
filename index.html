@@ -8,7 +8,7 @@
     :root {
       --bg-dark: #0a0e0a;
       --card-bg: #121814;
-      --accent: #00e676; /* Verde neón esmeralda */
+      --accent: #00e676;
       --accent-hover: #00c853;
       --text-main: #f0f5f1;
       --text-sub: #8ea393;
@@ -54,7 +54,6 @@
       margin-top: 4px;
     }
 
-    /* Formulario de Cotización Superior */
     .card-form {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -66,10 +65,6 @@
 
     .form-group {
       margin-bottom: 16px;
-    }
-
-    .form-group:last-of-type {
-      margin-bottom: 20px;
     }
 
     label {
@@ -106,7 +101,6 @@
       font-weight: bold;
     }
 
-    /* Botón de Cotización */
     .btn-cotizacion {
       display: block;
       width: 100%;
@@ -137,7 +131,6 @@
       line-height: 1.3;
     }
 
-    /* Secciones */
     .section-title {
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -147,7 +140,6 @@
       font-weight: 600;
     }
 
-    /* Cuadrícula de trabajos recientes (1x1) */
     .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -167,14 +159,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s;
     }
 
-    .gallery-item img:hover {
-      transform: scale(1.03);
-    }
-
-    /* Acordeón de Cuidados Posteriores */
     .care-section {
       margin-bottom: 20px;
     }
@@ -203,10 +189,6 @@
       outline: none;
     }
 
-    .accordion-header span {
-      font-size: 1.1rem;
-    }
-
     .accordion-content {
       max-height: 0;
       overflow: hidden;
@@ -231,13 +213,11 @@
 <body>
 
   <div class="container">
-
     <div class="header">
       <h1>InmortalytInk</h1>
       <p>Tu piel habla. Nosotros la escribimos.</p>
     </div>
 
-    <!-- Panel de Opciones para la Cotización -->
     <div class="card-form">
       <div class="form-group">
         <label for="style">Estilo de Diseño</label>
@@ -265,7 +245,6 @@
         <div class="size-value"><span id="size-label">10</span> cm</div>
       </div>
 
-      <!-- Botón de WhatsApp -->
       <a id="ws-btn" href="#" target="_blank" class="btn-cotizacion">
         Cotización Aquí
       </a>
@@ -274,55 +253,32 @@
       </div>
     </div>
 
-    <!-- Trabajos Recientes (1x1) -->
     <div class="section-title">Trabajos Recientes</div>
     <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="img/trabajo1.jpg" alt="Tatuaje 1">
-      </div>
-      <div class="gallery-item">
-        <img src="img/trabajo2.jpg" alt="Tatuaje 2">
-      </div>
-      <div class="gallery-item">
-        <img src="img/trabajo3.jpg" alt="Tatuaje 3">
-      </div>
-      <div class="gallery-item">
-        <img src="img/trabajo4.jpg" alt="Tatuaje 4">
-      </div>
+      <div class="gallery-item"><img src="img/trabajo1.jpg" alt="Tatuaje 1"></div>
+      <div class="gallery-item"><img src="img/trabajo2.jpg" alt="Tatuaje 2"></div>
+      <div class="gallery-item"><img src="img/trabajo3.jpg" alt="Tatuaje 3"></div>
+      <div class="gallery-item"><img src="img/trabajo4.jpg" alt="Tatuaje 4"></div>
     </div>
 
-    <!-- Cuidados Posteriores -->
     <div class="care-section">
       <div class="section-title">Cuidados Posteriores</div>
 
       <div class="accordion">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-          <span>🌸</span> Primeras 24 horas
-        </button>
-        <div class="accordion-content">
-          Mantén el plástico protector de 2 a 4 horas según las indicaciones. Lava suavemente con agua fría y jabón neutro, seca dando toques suaves con papel absorbente.
-        </div>
+        <button class="accordion-header" onclick="toggleAccordion(this)"><span>🌸</span> Primeras 24 horas</button>
+        <div class="accordion-content">Mantén el plástico protector de 2 a 4 horas según las indicaciones. Lava suavemente con agua fría y jabón neutro, seca dando toques suaves con papel absorbente.</div>
       </div>
 
       <div class="accordion">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-          <span>🧴</span> Hidratación y Crema
-        </button>
-        <div class="accordion-content">
-          Aplica una capa muy fina de crema recomendada (como crema hidratante sin perfume o específica para tatuajes) de 2 a 3 veces al día. Mantén la piel hidratada sin excederte.
-        </div>
+        <button class="accordion-header" onclick="toggleAccordion(this)"><span>🧴</span> Hidratación y Crema</button>
+        <div class="accordion-content">Aplica una capa muy fina de crema recomendada de 2 a 3 veces al día. Mantén la piel hidratada sin excederte.</div>
       </div>
 
       <div class="accordion">
-        <button class="accordion-header" onclick="toggleAccordion(this)">
-          <span>🚫</span> Lo que debes evitar
-        </button>
-        <div class="accordion-content">
-          No arranques las costras ni rasques la zona durante el proceso de pelado. Evita piscinas, playas, exposición directa al sol y ropa muy ajustada que genere fricción.
-        </div>
+        <button class="accordion-header" onclick="toggleAccordion(this)"><span>🚫</span> Lo que debes evitar</button>
+        <div class="accordion-content">No arranques las costras ni rasques la zona. Evita piscinas, playas, exposición directa al sol y ropa muy ajustada.</div>
       </div>
     </div>
-
   </div>
 
   <script>
@@ -335,7 +291,6 @@
       const style = document.getElementById('style').value;
       const zone = document.getElementById('zone').value;
       const size = document.getElementById('size').value;
-
       const mensaje = `¡Hola! Me gustaría cotizar un tatuaje con los siguientes detalles:\n- Estilo: ${style}\n- Zona: ${zone}\n- Tamaño aproximado: ${size} cm.\n\nAdjunto mi foto de referencia para coordinar disponibilidad:`;
       document.getElementById('ws-btn').href = `https://wa.me/584120000000?text=${encodeURIComponent(mensaje)}`;
     }
@@ -345,9 +300,7 @@
     function toggleAccordion(button) {
       const accordion = button.parentElement;
       document.querySelectorAll('.accordion').forEach(item => {
-        if (item !== accordion) {
-          item.classList.remove('active');
-        }
+        if (item !== accordion) item.classList.remove('active');
       });
       accordion.classList.toggle('active');
     }
